@@ -84,16 +84,6 @@ public class RewriteMe {
 
     }
 
-    public void test(){
-
-        Map<Category, List<Question>> questionsByCategory = questions.stream().collect(groupingBy(q -> q.getCategory()));
-
-        questionsByCategory.forEach((v,k) -> System.out.println(v + " " + k));
-
-        //Map<Category, List<String>> newMap = questionsByCategory.replaceAll( (k,v) -> v = v.stream().map(Question::getQuestionString).collect(Collectors.toList()));
-
-    }
-
     //Skapa en funktion som hittar det svarsalternativ som har flest bokstäver, i en kategori, given som inparameter
     // OBS: Du måste använda Reduce!
     public String getLongestLettercountAnwerInAGivenCategory(Category c)
@@ -104,7 +94,6 @@ public class RewriteMe {
 
     public static void main(String[] args){
         RewriteMe uppg4 = new RewriteMe();
-        uppg4.test();
 
     }
 
