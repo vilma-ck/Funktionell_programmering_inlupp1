@@ -12,8 +12,6 @@ import java.util.Scanner;
  */
 public class Main {
     private DataStructure database;
-    List<Tomte> employeeList = new ArrayList<>();
-    List<Tomte> allChiefs = new ArrayList<>();
 
     public Main(){
         database = new DataStructure();
@@ -25,7 +23,7 @@ public class Main {
         Tomte lookupTomte = getUserInput();
 
         //upward recursion
-        getAllChiefs(lookupTomte);
+        List<Tomte> allChiefs = getAllChiefs(lookupTomte);
         // print upward hierarchy
         for (Tomte t: allChiefs){
             System.out.println(t.getName());
@@ -37,15 +35,17 @@ public class Main {
     // recursion for going up in the hierarchy
 
     public List<Tomte> getAllChiefs(Tomte tomte){
-        getOneLayerChief(tomte);
-        return allChiefs;
+        List<Tomte> allChiefsAcc = new ArrayList<>();
+        getOneLayerChief(tomte, allChiefsAcc);
+        return allChiefsAcc;
     }
 
-    public void getOneLayerChief(Tomte tomte){
+    public List<Tomte> getOneLayerChief(Tomte tomte, List<Tomte> allChiefsAcc){
         if(tomte.getChief() != null){
-            allChiefs.add(tomte.getChief());
-            getOneLayerChief(tomte.getChief());
+            allChiefsAcc.add(tomte.getChief());
+            getOneLayerChief(tomte.getChief(), allChiefsAcc);
         }
+        return allChiefsAcc;
     }
 
 
