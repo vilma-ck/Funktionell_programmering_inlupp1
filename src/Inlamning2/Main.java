@@ -1,5 +1,7 @@
 package Inlamning2;
 
+import com.sun.source.tree.ReturnTree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,8 +24,8 @@ public class Main {
     public void lookupProgram(){
         database.loopData();
 
+/*
         Tomte lookupTomte = getUserInput();
-
         //upward recursion
         getAllChiefs(lookupTomte);
         // print upward hierarchy
@@ -31,8 +33,10 @@ public class Main {
             System.out.println(t.getName());
         }
 
+ */
 
-        lookupTomte = getUserInput();
+
+        Tomte lookupTomte = getUserInput();
 
         // down-ward recursion
         List<Tomte> downList = getALlEmployees(lookupTomte);
@@ -40,60 +44,28 @@ public class Main {
             System.out.println(t);
         }
 
-
-
     }
 
 
     // recursion for going down in the hierarchy
-/*
 
-    public List<Tomte> getALlEmployeesOld(Tomte tomte){
-
-        employeeList.addAll(tomte.getEmployees());
-        System.out.println(employeeList.size() + " på första platsen " + employeeList.get(0));
-        for (int i = 0; i < employeeList.size(); i++) {
-            employeeList.addAll(getOneLayerEmployees(employeeList.get(i), i));
-        }
-        //employeeList.addAll(getOneLayerEmployees(employeeList.get(0), 0));
-        return employeeList;
-
+    public List<Tomte> getALlEmployees(Tomte tomte){
+        List<Tomte> allEmployeesAcc = new ArrayList<>();
+        getOneLayerEmployees(tomte, allEmployeesAcc);
+        return allEmployeesAcc;
     }
 
- */
-// sida 753
-    public List<Tomte> getALlEmployees(Tomte tomte){
-        List<Tomte> employedLayers = new ArrayList<>();
-        if(! tomte.getEmployees().isEmpty()){
-            List<Tomte> tempMidList = new ArrayList<>();
-            tempMidList.addAll(tomte.getEmployees());
-            for (int i = 0; i < tempMidList.size(); i++) {
-                employedLayers.add(tempMidList.get(i));
-                getALlEmployees(tempMidList.get(i));
+    public List<Tomte> getOneLayerEmployees(Tomte tomte, List<Tomte> allEmployeesAcc){
+        if(!tomte.getEmployees().isEmpty()){
+            allEmployeesAcc.addAll(tomte.getEmployees());
+            for (Tomte employee : tomte.getEmployees()) {
+                getOneLayerEmployees(employee, allEmployeesAcc);
             }
             tomte.getEmployees();
-        } return employedLayers;
-    }
-
-    public void getOneLayerEmployees(Tomte tome){
-
-    }
-/*
-    public List<Tomte> getOneLayerEmployeesOld(Tomte tomte, int index){
-        if(tomte.getEmployees().isEmpty() && index == employeeList.size()-1){
-            System.out.println(tomte.getName() + " " + "tomt");
-            return tomte.getEmployees();
-        } else {
-            employeeList.addAll(tomte.getEmployees());
-            getOneLayerEmployees(employeeList.get(index++), index++);
-            return employeeList;
-
         }
+        return allEmployeesAcc;
+
     }
-
- */
-
-
 
 
     // recursion for going up in the hierarchy
