@@ -22,7 +22,7 @@ public class Main {
     public void lookupProgram(){
         database.loopData();
 
-/*
+
         Tomte lookupTomte = getUserInput();
         //upward recursion
         List<Tomte> allChiefs = getAllChiefs(lookupTomte);
@@ -31,10 +31,9 @@ public class Main {
             System.out.println(t.getName());
         }
 
- */
 
 
-        Tomte lookupTomte = getUserInput();
+        lookupTomte = getUserInput();
 
         // down-ward recursion
         List<Tomte> downList = getALlEmployees(lookupTomte);
