@@ -1,5 +1,7 @@
 package Inlamning2;
 
+import com.sun.source.tree.ReturnTree;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,8 +22,8 @@ public class Main {
     public void lookupProgram(){
         database.loopData();
 
+/*
         Tomte lookupTomte = getUserInput();
-
         //upward recursion
         List<Tomte> allChiefs = getAllChiefs(lookupTomte);
         // print upward hierarchy
@@ -29,8 +31,40 @@ public class Main {
             System.out.println(t.getName());
         }
 
+ */
+
+
+        Tomte lookupTomte = getUserInput();
+
+        // down-ward recursion
+        List<Tomte> downList = getALlEmployees(lookupTomte);
+        for(Tomte t: downList){
+            System.out.println(t);
+        }
 
     }
+
+
+    // recursion for going down in the hierarchy
+
+    public List<Tomte> getALlEmployees(Tomte tomte){
+        List<Tomte> allEmployeesAcc = new ArrayList<>();
+        getOneLayerEmployees(tomte, allEmployeesAcc);
+        return allEmployeesAcc;
+    }
+
+    public List<Tomte> getOneLayerEmployees(Tomte tomte, List<Tomte> allEmployeesAcc){
+        if(!tomte.getEmployees().isEmpty()){
+            allEmployeesAcc.addAll(tomte.getEmployees());
+            for (Tomte employee : tomte.getEmployees()) {
+                getOneLayerEmployees(employee, allEmployeesAcc);
+            }
+            tomte.getEmployees();
+        }
+        return allEmployeesAcc;
+
+    }
+
 
     // recursion for going up in the hierarchy
 
