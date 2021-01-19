@@ -1,10 +1,9 @@
 package Inlamning2;
 
-import com.sun.source.tree.ReturnTree;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * Created by Vilma Couturier Kaijser
@@ -14,6 +13,7 @@ import java.util.Scanner;
  */
 public class Main {
     private DataStructure database;
+    Scanner scanner = new Scanner(System.in);
 
     public Main(){
         database = new DataStructure();
@@ -22,25 +22,34 @@ public class Main {
     public void lookupProgram(){
         database.loopData();
 
+        while(true){
 
-        Tomte lookupTomte = getUserInput();
-        //upward recursion
-        List<Tomte> allChiefs = getAllChiefs(lookupTomte);
-        // print upward hierarchy
-        for (Tomte t: allChiefs){
-            System.out.println(t.getName());
+            Tomte lookupTomte = tomteLookup();
+
+            //upward recursion
+            List<Tomte> allChiefs = getAllChiefs(lookupTomte);
+            System.out.print("Över " + lookupTomte.getName() + " jobbar: ");
+            System.out.println(getResultString(allChiefs));
+
+            // down-ward recursion
+            List<Tomte> allEmployees = getALlEmployees(lookupTomte);
+            System.out.print("Under " + lookupTomte.getName() + " jobbar: ");
+            System.out.println(getResultString(allEmployees));
+
+            System.out.println("Vill du slå upp en till tomte? (ja/nej)");
+            String userChoice = scanner.next();
+            if(userChoice.equalsIgnoreCase("nej")){
+                break;
+            }
+
         }
 
 
 
-        lookupTomte = getUserInput();
+    }
 
-        // down-ward recursion
-        List<Tomte> downList = getALlEmployees(lookupTomte);
-        for(Tomte t: downList){
-            System.out.println(t);
-        }
-
+    public String getResultString(List<Tomte> resultList){
+        return resultList.stream().map(Tomte::getName).collect(Collectors.joining(", "));
     }
 
 
@@ -61,7 +70,6 @@ public class Main {
             tomte.getEmployees();
         }
         return allEmployeesAcc;
-
     }
 
 
@@ -82,11 +90,19 @@ public class Main {
     }
 
 
-    public Tomte getUserInput(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Namn att slå upp: ");
-        String tomteName = scanner.next();
-        return database.lookupTomteByName(tomteName);
+    public Tomte tomteLookup(){
+        String tomteName = getUserInput("Namn att slå upp: ");
+        Tomte result = database.lookupTomteByName(tomteName);
+        while(result == null){
+            tomteName = getUserInput("Skriv in namnet igen: ");
+            result = database.lookupTomteByName(tomteName);
+        }
+        return result;
+    }
+
+    public String getUserInput(String prompt){
+        System.out.println(prompt);
+        return scanner.next();
     }
 
 
@@ -95,6 +111,9 @@ public class Main {
         main.lookupProgram();
     }
 
+    public int getUserInt(){
+        return 0;
+    }
 
 
 }
