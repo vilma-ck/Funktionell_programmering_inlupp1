@@ -20,7 +20,7 @@ public class Main {
     }
 
     public void lookupProgram(){
-        database.loopData();
+        //database.loopData();
 
         while(true){
 
@@ -41,11 +41,7 @@ public class Main {
             if(userChoice.equalsIgnoreCase("nej")){
                 break;
             }
-
         }
-
-
-
     }
 
     public String getResultString(List<Tomte> resultList){
@@ -109,10 +105,6 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         main.lookupProgram();
-    }
-
-    public int getUserInt(){
-        return 0;
     }
 
 
